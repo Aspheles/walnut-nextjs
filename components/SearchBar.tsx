@@ -6,6 +6,7 @@ import { fetchAllBrands } from "@/utils";
 const SearchBar = () => {
   const [query, setQuery] = useState("");
 
+  //CORS BLOCKING FUNCTIONALITY
   const handleSearch = () => {
     const fetchedAllBrands = fetchAllBrands();
   };

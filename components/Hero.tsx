@@ -6,7 +6,6 @@ import { CustomButton } from ".";
 import Link from "next/link";
 
 const Hero = () => {
-  const handleScroll = () => {};
   return (
     <>
       {/* Hero */}
@@ -41,7 +40,6 @@ const Hero = () => {
                     containerStyles={
                       "bg-[#00a3fe] hover:bg-sky-600 text-white inline-flex items-center justify-center h-12 px-6 font-semibold tracking-wide text-teal-900 transition duration-200 rounded shadow-md hover:text-deep-purple-900 bg-teal-accent-400 hover:bg-deep-purple-accent-100 focus:shadow-outline focus:outline-none"
                     }
-                    handleClick={handleScroll}
                     btnType={"button"}
                     disabled={false}
                   />
