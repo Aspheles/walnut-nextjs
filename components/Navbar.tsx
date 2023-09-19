@@ -24,27 +24,21 @@ const Navbar = () => {
               ></Image>
             </a>
             <ul className="flex items-center  space-x-8 lg:flex">
-              <Link href={"/"}>
-                <li>
-                  <a
-                    aria-label="Home"
-                    title="Home Page"
-                    className="font-medium tracking-wide text-black-100 transition-colors duration-200 hover:text-teal-accent-400"
-                  >
-                    Home
-                  </a>
-                </li>
+              <Link
+                href={"/"}
+                aria-label="Home"
+                title="Home"
+                className="font-medium tracking-wide text-black-100 transition-colors duration-200 hover:text-teal-accent-400"
+              >
+                Home
               </Link>
-              <Link href={"/createBrand"}>
-                <li>
-                  <a
-                    aria-label="Our product"
-                    title="Create Brand"
-                    className="font-medium tracking-wide text-black-100 transition-colors duration-200 hover:text-teal-accent-400"
-                  >
-                    Create Brand
-                  </a>
-                </li>
+              <Link
+                href={"/createBrand"}
+                aria-label="Our product"
+                title="Create Brand"
+                className="font-medium tracking-wide text-black-100 transition-colors duration-200 hover:text-teal-accent-400"
+              >
+                Create Brand
               </Link>
             </ul>
           </div>

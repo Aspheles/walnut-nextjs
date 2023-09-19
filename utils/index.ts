@@ -7,8 +7,6 @@ const API_PASSWORD: string = process.env.WALNUT_API_PASSWORD || "";
 const API_ORGANIZATION_ID: string =
   process.env.WALNUT_API_ORGANIZATION_ID || "";
 
-axios.create({baseURL: API_BASE_URL});
-
 const getApiTokenKey = async () => {
   const apiAuthData = {
     email: API_EMAIL,
@@ -48,7 +46,7 @@ const fetchAllBrands = async () => {
   try {
     const fetchedToken = await getApiTokenKey();
     if (!fetchedToken) {
-      console.error('[Api: key token not found]');
+      console.error("[Api: key token not found]");
       return;
     }
 
@@ -58,7 +56,10 @@ const fetchAllBrands = async () => {
       Authorization: `Bearer ${fetchedToken.data.key}`,
     };
 
-    const brandResponse = await axios.get("https://stagingbackend.walletapp.co/brands", { headers });
+    const brandResponse = await axios.get(
+      "https://stagingbackend.walletapp.co/brands",
+      { headers }
+    );
 
     if (brandResponse.status !== 200) {
       throw new Error("Network response for fetching brands was not ok");
@@ -66,7 +67,10 @@ const fetchAllBrands = async () => {
 
     try {
       console.log("Trying to delete token");
-      const deleteTokenResponse = await axios.delete("https://stagingbackend.walletapp.co/oauth/token", { headers });
+      const deleteTokenResponse = await axios.delete(
+        "https://stagingbackend.walletapp.co/oauth/token",
+        { headers }
+      );
 
       if (deleteTokenResponse.status !== 200) {
         throw new Error("Network response for deleting token was not ok");
@@ -90,37 +94,40 @@ const fetchAllBrands = async () => {
   }
 };
 
-const createBrand = async (BrandModalFormData:BrandModalFormData) => {
-    const fetchedToken = await getApiTokenKey();
-    if (!fetchedToken) {
-      console.error('[Api: key token not found]');
-      return;
+const createBrand = async (BrandModalFormData: BrandModalFormData) => {
+  const fetchedToken = await getApiTokenKey();
+  if (!fetchedToken) {
+    console.error("[Api: key token not found]");
+    return;
+  }
+
+  try {
+    const response = await axios({
+      method: "POST",
+      url: "https://stagingbackend.walletapp.co/brands",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${fetchedToken.data.key}`,
+      },
+      data: {
+        organization_id: API_ORGANIZATION_ID,
+        name: BrandModalFormData.name,
+        primary_color: BrandModalFormData.primaryColor,
+        second_color: BrandModalFormData.secondColor,
+        third_color: BrandModalFormData.thirdColor,
+      },
+    });
+
+    if (response.status !== 200) {
+      throw new Error("Network response was not ok");
     }
 
-    BrandModalFormData.organizationId = API_ORGANIZATION_ID;
-  
-    try {
-      const response = await axios.post(
-        "https://stagingbackend.walletapp.co/brands",
-        JSON.stringify(BrandModalFormData),
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: `Bearer ${fetchedToken.data.key}`,
-          },
-        }
-      );
-  
-      if (response.status !== 200) {
-        throw new Error("Network response was not ok");
-      }
-  
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching brands:", error);
-      throw error;
-    }
-  };
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching brands:", error);
+    throw error;
+  }
+};
 
-export {fetchAllBrands, createBrand };
+export { fetchAllBrands, createBrand };
