@@ -3,6 +3,8 @@ import { BrandModalFormData, BrandModalProps } from "@/types";
 import { createBrand } from "@/utils";
 import React, { useState } from "react";
 import { CustomButton } from ".";
+import { redirect } from "next/dist/server/api-utils";
+import Router from "next/router";
 
 const CreateBrandModal = () => {
   const [formData, setFormData] = useState<BrandModalFormData>({
@@ -24,7 +26,11 @@ const CreateBrandModal = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    createBrand(formData);
+    const response = await createBrand(formData);
+
+    if (response) {
+      alert("Brand has been created");
+    }
   };
 
   return (
